@@ -51,6 +51,20 @@ export const constantRouterMap = [
         name: '百度极速排名',
         component: () => import('@/views/baidu/speed'),
         meta: { title: '百度极速排名', icon: 'table' }
+      },
+      {
+        path: 'add',
+        name: '添加百度极速排名',
+        hidden: true,
+        component: () => import('@/views/baidu/saveSpeed'),
+        meta: { title: '添加百度极速排名', icon: 'table' }
+      },
+      {
+        path: 'edit',
+        name: '修改百度极速排名',
+        hidden: true,
+        component: () => import('@/views/baidu/saveSpeed'),
+        meta: { title: '添加百度极速排名', icon: 'table', isEdit:true }
       }
     ]
   },
