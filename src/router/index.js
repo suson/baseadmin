@@ -29,12 +29,30 @@ export const constantRouterMap = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    name: 'Dashboard',
-    hidden: true,
+    name: '首页',
+    hidden: false,
     children: [{
       path: 'dashboard',
+      meta: { title: '首页', icon: 'example' },
       component: () => import('@/views/dashboard/index')
     }]
+  },
+
+  {
+    path: '/baidu_task',
+    component: Layout,
+    redirect: '/baidu_task',
+    name: '百度任务',
+    alwaysShow: true,
+    meta: { title: '百度任务', icon: 'example' },
+    children: [
+      {
+        path: 'speed',
+        name: '百度极速排名',
+        component: () => import('@/views/baidu/speed'),
+        meta: { title: '百度极速排名', icon: 'table' }
+      }
+    ]
   },
 
   {

@@ -25,7 +25,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-
+import { login, logout, getInfo } from '@/api/login'
 export default {
   components: {
     Breadcrumb,
@@ -42,9 +42,22 @@ export default {
       this.$store.dispatch('ToggleSideBar')
     },
     logout() {
-      this.$store.dispatch('LogOut').then(() => {
-        location.reload() // 为了重新实例化vue-router对象 避免bug
+      return new Promise((resolve, reject) => {
+        logout().then(() => {
+          window.location.href = process.env.BASE_API+'/service/login.html';
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
       })
+      // logout().then(() => {
+      //     window.location.href = process.env.BASE_API+'/service/login.html';
+      // }).catch(error => {
+      //   console.log(error)
+      // })
+      // this.$store.dispatch('LogOut').then(() => {
+      //   location.reload() // 为了重新实例化vue-router对象 避免bug
+      // })
     }
   }
 }

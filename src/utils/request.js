@@ -2,19 +2,31 @@ import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import store from '../store'
 import { getToken } from '@/utils/auth'
-
+// 一个登录的场景，用axios发送post请求去登录，能成功返回数据，但是用作权限验证的cookie就是没有保存,经查阅，axios 默认不发送cookie，跨域也是一个原因，需要全局设置
+axios.defaults.withCredentials = true
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api 的 base_url
-  timeout: 5000 // 请求超时时间
+  timeout: 5000, // 请求超时时间
+  headers:{
+    'Content-Type':'application/x-www-form-urlencoded'
+  },
+  transformRequest: [function (data) {
+    // Do whatever you want to transform the data
+    let ret = ''
+    for (let it in data) {
+      ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+    }
+    return ret
+  }]
 })
 
 // request拦截器
 service.interceptors.request.use(
   config => {
-    if (store.getters.token) {
-      config.headers['X-Token'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
-    }
+    // if (store.getters.token) {
+    //   config.headers['X-Token'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+    // }
     return config
   },
   error => {
@@ -27,8 +39,10 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
+
+    return response.data;
     /**
-     * code为非20000是抛错 可结合自己业务进行修改
+     * code为非0是抛错 可结合自己业务进行修改
      */
     const res = response.data
     if (res.code !== 20000) {

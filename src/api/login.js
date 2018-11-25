@@ -21,7 +21,10 @@ export function getInfo(token) {
 
 export function logout() {
   return request({
-    url: '/user/logout',
-    method: 'post'
+    url: '/service/urlcore/webreg.php',
+    method: 'post',
+    data: {
+      f: 8
+    }
   })
 }
