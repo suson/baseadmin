@@ -37,3 +37,25 @@ export function operate(jsonstr) {
     }
   })
 }
+
+export function getInfo(jsonstr) {
+  return request({
+    url: '/service/urlcore/webreg.php',
+    method: 'post',
+    data: {
+      f: 39,
+      i: jsonstr
+    }
+  })
+}
+
+export function save(jsonstr) {
+  return request({
+    url: '/service/urlcore/webreg.php',
+    method: 'post',
+    data: {
+      f: 35,
+      i: jsonstr
+    }
+  })
+}

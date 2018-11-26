@@ -60,7 +60,7 @@ export const constantRouterMap = [
         meta: { title: '添加百度极速排名', icon: 'table' }
       },
       {
-        path: 'edit',
+        path: 'edit/:id(\\d+)',
         name: '修改百度极速排名',
         hidden: true,
         component: () => import('@/views/baidu/saveSpeed'),

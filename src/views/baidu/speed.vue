@@ -46,7 +46,9 @@
     <el-table-column
       label="操作"
       width="120">
-      <template slot-scope="scope">{{ scope.row.date }}</template>
+      <template slot-scope="scope"><el-button
+          size="mini"
+          @click="edit(scope.row)">编辑</el-button></template>
     </el-table-column>
   </el-table>
   <div style="margin-top: 20px">
@@ -237,6 +239,9 @@ export default {
                     })
                 }
             })
+        },
+        edit(item) {
+            this.$router.push({path: '/baidu_task/edit/'+item.urlid})
         }
     }
 }
