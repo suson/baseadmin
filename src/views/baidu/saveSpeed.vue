@@ -18,15 +18,18 @@
       
 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <el-form-item label="任务备注" prop="name">
-    <el-input v-model="ruleForm.name"></el-input>
+    <el-input v-model="ruleForm.name" placeholder='备注名称'></el-input>
+    <span class="help-block info">请输入任务的备注名，以便自己识别</span>
   </el-form-item>
   
     <el-form-item label="关键字" prop="keyword">
-    <el-input v-model="ruleForm.keyword"></el-input>
+    <el-input v-model="ruleForm.keyword" placeholder='添加需要刷的关键字'></el-input>
+    <span class="help-block tips">添加需要刷的关键字</span>
   </el-form-item>
   
     <el-form-item label="域名" prop="url">
-    <el-input v-model="ruleForm.url"></el-input>
+    <el-input v-model="ruleForm.url" placeholder='例：http://www.baidu.com'></el-input>
+    <span class="help-block">网站域名</span>
   </el-form-item>
   <el-form-item>
     <el-button type="primary" @click="submitForm('ruleForm')">{{save_tip}}</el-button>
