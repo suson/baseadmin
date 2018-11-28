@@ -50,15 +50,37 @@
       </el-col>
     </el-row>
 <el-dialog
-  title="提示"
+  title="龙卷风软件-网址代挂服务"
   :visible.sync="centerDialogVisible"
   width="60%"
   >
-  <span>需要注意的是内容是默认不居中的</span>
-  <span slot="footer" class="dialog-footer">
+  <el-form :model="substituteForm" :label-position="labelPosition">
+    
+    <el-form-item label="1、请选择代挂流量：" :label-width="formLabelWidth">
+      <el-select v-model="substituteForm.region" placeholder="请选择活动区域">
+        <el-option label="区域一" value="shanghai"></el-option>
+        <el-option label="区域二" value="beijing"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="2、请输入服务时间：" :label-width="formLabelWidth">
+      <el-col :span="2">
+      <el-input v-model.number="substituteForm.name" autocomplete="off"></el-input>
+      </el-col>
+      <el-col :span="22">
+          <span>天(范围:1-365天)</span>
+      </el-col>
+    </el-form-item>
+    <el-form-item label="3、请选择付费方式：" prop="resource" :label-width="formLabelWidth">
+    <el-radio-group v-model="substituteForm.resource">
+      <el-radio label="1">一次性付费</el-radio>
+      <el-radio label="0">按天付费</el-radio>
+    </el-radio-group>
+  </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-  </span>
+  </div>
 </el-dialog>
   </div>
 </template>
@@ -108,9 +130,21 @@
     data() {
       return {
         listLoading: true,
+        labelPosition:'left',
         centerDialogVisible:false,
         listData: [],
-        multipleSelection: []
+        multipleSelection: [],
+        substituteForm: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
+        formLabelWidth: '150px'
       }
     },
     created() {
