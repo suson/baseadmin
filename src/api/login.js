@@ -1,5 +1,10 @@
 import request from '@/utils/request'
-
+let REQUEST_DATA = {
+  url: '/service/urlcore/webreg.php',
+  method: 'post',
+  data: {
+  }
+}
 export function login(username, password) {
   return request({
     url: '/user/login',
@@ -11,12 +16,9 @@ export function login(username, password) {
   })
 }
 
-export function getInfo(token) {
-  return request({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
-  })
+export function getInfo(jsonstr) {
+  REQUEST_DATA.data.f = 7;
+  return request(REQUEST_DATA)
 }
 
 export function logout() {

@@ -6,7 +6,8 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
-    roles: []
+    roles: [],
+    info:{}
   },
 
   mutations: {
@@ -21,6 +22,9 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+    },
+    SET_USER: (state, info) => {
+      state.info = info
     }
   },
 
@@ -44,17 +48,19 @@ const user = {
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
         getInfo(state.token).then(response => {
-          const data = response.data
-          if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', data.roles)
+          // console.log(response);
+          const data = response;
+          if (response.error > -1) { // 验证返回的roles是否是一个非空数组
+            commit('SET_ROLES', data.level);
+            commit('SET_NAME', data.name);
           } else {
             reject('getInfo: roles must be a non-null array !')
           }
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
-          resolve(response)
+          
+          commit('SET_USER', data);
+          resolve(response);
         }).catch(error => {
-          reject(error)
+          reject(error);
         })
       })
     },

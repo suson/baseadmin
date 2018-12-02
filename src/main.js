@@ -14,14 +14,18 @@ import store from './store'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-
+import filters from '@/utils/filters.js'
 Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
-
+for (let key in filters) {
+  Vue.filter(key, filters[key])
+};
 new Vue({
   el: '#app',
   router,
   store,
   render: h => h(App)
-})
+});
+
+
