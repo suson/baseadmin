@@ -101,7 +101,7 @@
 
   export default {
     created() {
-      console.log(this.$route);
+    //   console.log(this.$route);
       if (this.$route.meta.isEdit) {
         this.ruleForm.urlid = this.$route.params.id;
         this.getInfo(this.ruleForm.urlid);

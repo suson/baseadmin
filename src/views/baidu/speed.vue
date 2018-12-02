@@ -47,12 +47,23 @@
               </template>
             </el-table-column>
           </el-table>
+
           <div style="margin-top: 20px">
-            <el-button-group>
-              <el-button size="small" type="primary" icon="el-icon-remove-outline" @click="operate(0)">停止</el-button>
-              <el-button size="small" type="primary" icon="el-icon-caret-right" @click="operate(1)">开始</el-button>
-              <el-button size="small" type="danger" icon="el-icon-delete" @click="delTip()">删除</el-button>
-            </el-button-group>
+
+            <el-col :span="6">
+              <el-button-group>
+                <el-button size="small" type="primary" icon="el-icon-remove-outline" @click="operate(0)">停止</el-button>
+                <el-button size="small" type="primary" icon="el-icon-caret-right" @click="operate(1)">开始</el-button>
+                <el-button size="small" type="danger" icon="el-icon-delete" @click="delTip()">删除</el-button>
+              </el-button-group>
+            </el-col>
+            <el-col :span="18">
+              <div style="float:right;">
+                <el-pagination @current-change="handleCurrentChange" background layout="total,prev, pager, next" :page-size="listPageSize" :total="listTotal">
+                </el-pagination>
+
+              </div>
+            </el-col>
           </div>
         </div>
       </el-col>
@@ -68,7 +79,7 @@
 
         <el-form-item label="1、请选择代挂流量：" :label-width="formLabelWidth">
           <el-select v-model="substituteForm.svcid" placeholder="请选择代挂流量" :disabled="disabled">
-            <el-option v-for="(item, index) in trusteeServerIP" :label="item" :value="index"></el-option>
+            <el-option v-for="(item, index) in trusteeServerIP" :key="index" :label="item" :value="index"></el-option>
             <!-- <el-option label="区域二" value="beijing"></el-option> -->
           </el-select>
         </el-form-item>
@@ -188,6 +199,9 @@
         centerDialogVisible: false,
         TrusteeDialogVisible: false,
         listData: [],
+        listTotal:0,
+        listPage:1,
+        listPageSize:10,
         multipleSelection: [],
         //网址代挂表单
         substituteForm: {
@@ -216,7 +230,7 @@
       this.fetchData()
     },
     updated() {
-      console.log('updated:', this.substituteForm);
+      //   console.log('updated:', this.substituteForm);
     },
     computed: {
       // 计算属性的 getter
@@ -228,7 +242,7 @@
     },
     watch: {
       'substituteForm.day': function (new_data, old) {
-        console.log('new:', new_data);
+        // console.log('new:', new_data);
         if (new_data > 365 || new_data < 1) {
           this.$message({
             message: '请输入有效的服务时间（1-365）',
@@ -238,17 +252,17 @@
           this.substituteForm.day = 30;
           return false;
         }
-        console.log('old:', old);
+        // console.log('old:', old);
         this.getService();
       },
       'substituteForm.svcid': function (new_data, old) {
-        console.log('new:', new_data);
-        console.log('old:', old);
+        // console.log('new:', new_data);
+        // console.log('old:', old);
         this.getService();
       },
       'substituteForm.nowpay': function (new_data, old) {
-        console.log('new:', new_data);
-        console.log('old:', old);
+        // console.log('new:', new_data);
+        // console.log('old:', old);
         this.getService();
       }
     },
@@ -297,7 +311,7 @@
         var info = this.getTrusteeServiceInfo(odrs);
         return info.showTitle || '无';
       },
-      showOdrStatus(value){
+      showOdrStatus(value) {
         var name = '';
         switch (parseInt(value)) {
           case 1:
@@ -310,32 +324,32 @@
         return name;
       },
       showSvcid(value) {
-          var name = '';
-          switch (parseInt(value)) {
-            case 101:
-                name = "1000IP";
-                break;
-            case 102:
-                name = "2000IP";
-                break;
-            case 103:
-                name = "3000IP";
-                break;
-            case 106:
-                name = "6000IP";
-                break;
-            case 110:
-                name = "10000IP";
-                break;
-            case 115:
-                name = "15000IP";
-                break;
-            case 120:
-                name = "20000IP";
-                break;
-            default:
-                name = "3000IP";
-                break;
+        var name = '';
+        switch (parseInt(value)) {
+          case 101:
+            name = "1000IP";
+            break;
+          case 102:
+            name = "2000IP";
+            break;
+          case 103:
+            name = "3000IP";
+            break;
+          case 106:
+            name = "6000IP";
+            break;
+          case 110:
+            name = "10000IP";
+            break;
+          case 115:
+            name = "15000IP";
+            break;
+          case 120:
+            name = "20000IP";
+            break;
+          default:
+            name = "3000IP";
+            break;
         }
         return name;
       }
@@ -378,13 +392,16 @@
       fetchData() {
         this.listLoading = false;
         var i = {
-          "type": "baidu_speed"
+          "type": "baidu_speed",
+          "page":this.listPage,
+          "page_size":this.listPageSize
         };
         i = JSON.stringify(i);
         getList(i).then(response => {
           // console.log(response);
           this.listData = response.urls;
           this.listLoading = false
+          this.listTotal = response.total;
         })
       },
       delTip: function () {
@@ -417,12 +434,12 @@
           //     message: '已取消删除'
           // });
         });
-        console.log(1);
+        // console.log(1);
 
         return;
       },
       del: function (ids) {
-        console.log(ids);
+        // console.log(ids);
         var i = {
           "ids": ids
         }
@@ -512,7 +529,7 @@
         this.substituteForm.urlid = item.urlid;
         if (type == 1) { // 续费
           var info = this.getTrusteeServiceInfo(item.odrs);
-          console.log(info);
+          //   console.log(info);
           this.disabled = true;
           this.substituteForm.odrid = info.odrid;
           this.substituteForm.etime = info.etime;
@@ -523,7 +540,7 @@
         this.centerDialogVisible = true
       },
       closeTrusteeTip() {
-          this.$confirm(
+        this.$confirm(
           '您确认要退订网址代挂服务吗？',
           '提示', {
             confirmButtonText: '确定',
@@ -586,7 +603,7 @@
         })
       },
       submitTrustee() {
-        console.log(this.substituteForm);
+        // console.log(this.substituteForm);
         var i = this.substituteForm;
         i = JSON.stringify(i);
         openService(i).then(response => {
@@ -606,7 +623,11 @@
           }
           this.centerDialogVisible = false;
         })
-      }
+      },
+    handleCurrentChange(val) {
+        this.listPage=val;
+        this.fetchData();
+    }
     }
   }
 
