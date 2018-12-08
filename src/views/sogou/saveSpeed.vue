@@ -1,5 +1,5 @@
 <template>
-  <url-save menuType="baidu_task" subMenuType="baidu_speed"></url-save>
+  <url-save menuType="sogou_task" subMenuType="sogou_ranking"></url-save>
 </template>
 
 <script>

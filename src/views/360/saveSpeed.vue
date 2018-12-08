@@ -1,5 +1,5 @@
 <template>
-  <url-save menuType="baidu_task" subMenuType="baidu_speed"></url-save>
+  <url-save menuType="360_task" subMenuType="360_ranking"></url-save>
 </template>
 
 <script>

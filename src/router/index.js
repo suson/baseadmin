@@ -33,7 +33,7 @@ export const constantRouterMap = [
     hidden: false,
     children: [{
       path: 'dashboard',
-      meta: { title: '首页', icon: 'example' },
+      meta: { title: '首页', icon: 'home' },
       component: () => import('@/views/dashboard/index')
       // component: () => import('@/views/baidu/speed')
     }]
@@ -45,31 +45,90 @@ export const constantRouterMap = [
     redirect: '/baidu_task',
     name: '百度任务',
     alwaysShow: true,
-    meta: { title: '百度任务', icon: 'example' },
+    meta: { title: '百度任务', icon: 'baidu' },
     children: [
       {
         path: 'speed',
         name: '百度极速排名',
         component: () => import('@/views/baidu/speed'),
-        meta: { title: '百度极速排名', icon: 'table' }
+        meta: { title: '百度极速排名', icon: '' }
       },
       {
         path: 'add',
         name: '添加百度极速排名',
         hidden: true,
         component: () => import('@/views/baidu/saveSpeed'),
-        meta: { title: '添加百度极速排名', icon: 'table' }
+        meta: { title: '添加百度极速排名', icon: '' }
       },
       {
         path: 'edit/:id(\\d+)',
         name: '修改百度极速排名',
         hidden: true,
         component: () => import('@/views/baidu/saveSpeed'),
-        meta: { title: '添加百度极速排名', icon: 'table', isEdit:true }
+        meta: { title: '修改百度极速排名', icon: '', isEdit:true }
       }
     ]
   },
-
+  {
+    path: '/360_task',
+    component: Layout,
+    redirect: '/360task',
+    name: '360搜索',
+    alwaysShow: true,
+    meta: { title: '360搜索', icon: '360' },
+    children: [
+      {
+        path: 'speed',
+        name: '360排名',
+        component: () => import('@/views/360/speed'),
+        meta: { title: '360排名', icon: '' }
+      },
+      {
+        path: 'add',
+        name: '添加360排名',
+        hidden: true,
+        component: () => import('@/views/360/saveSpeed'),
+        meta: { title: '添加360排名', icon: '' }
+      },
+      {
+        path: 'edit/:id(\\d+)',
+        name: '修改360排名',
+        hidden: true,
+        component: () => import('@/views/360/saveSpeed'),
+        meta: { title: '修改360排名', icon: '', isEdit:true }
+      }
+    ]
+  },
+  {
+    path: '/sogou_task',
+    component: Layout,
+    redirect: '/sogou_task',
+    name: '搜狗搜索',
+    alwaysShow: true,
+    meta: { title: '搜狗搜索', icon: 'sogou' },
+    children: [
+      {
+        path: 'speed',
+        name: '搜狗排名',
+        component: () => import('@/views/sogou/speed'),
+        meta: { title: '搜狗排名', icon: '' }
+      },
+      {
+        path: 'add',
+        name: '添加搜狗排名',
+        hidden: true,
+        component: () => import('@/views/sogou/saveSpeed'),
+        meta: { title: '添加搜狗排名', icon: '' }
+      },
+      {
+        path: 'edit/:id(\\d+)',
+        name: '修改搜狗排名',
+        hidden: true,
+        component: () => import('@/views/sogou/saveSpeed'),
+        meta: { title: '修改搜狗排名', icon: '', isEdit:true }
+      }
+    ]
+  },
   // {
   //   path: '/example',
   //   component: Layout,
