@@ -233,12 +233,12 @@ export const constantRouterMap = [
   //   ]
   // },
   {
-    path: 'logout',
+    path: '',
     component: Layout,
     name: '首页',
     hidden: false,
     children: [{
-      path: '',
+      path: 'logout',
       meta: { title: '退出', icon: 'link' }
     }]
   },
