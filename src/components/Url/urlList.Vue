@@ -30,7 +30,7 @@
               <template slot-scope="scope">{{ scope.row.tdclick }}</template>
             </el-table-column>
             <el-table-column label="状态" width="120">
-              <template slot-scope="scope">{{scope.row.online | urlStatusName}}-{{scope.row.free | shareStatusName}}</template>
+              <template slot-scope="scope">{{scope.row.online | urlStatusName}} <el-button size="mini" type="text" @click="operateOneItem(scope.row,scope.row.free)">{{scope.row.free | shareBtnName}}</el-button></template>
             </el-table-column>
             <el-table-column label="网址代挂服务" width="220">
               <template slot-scope="scope">
@@ -295,10 +295,23 @@
         var name = '';
         switch (value.toString()) {
           case '0':
-            name = '未分享';
+            name = '停止优化';
             break;
           case '1':
-            name = '分享中';
+            name = '优化中';
+            break;
+
+        }
+        return name;
+      },
+      shareBtnName: function (value) {
+        var name = '';
+        switch (value.toString()) {
+          case '0':
+            name = '开始优化';
+            break;
+          case '1':
+            name = '停止优化';
             break;
 
         }
@@ -481,6 +494,17 @@
       },
       addTask: function () {
         this.$router.push('/'+this.menuType+'/add')
+      },
+      operateOneItem: function(item,status) {
+        var type = 0;
+        if (status == 0) {
+          type = 1;
+        } else {
+          type = 0;
+        }
+        this.$refs.multipleTable.clearSelection();
+        this.$refs.multipleTable.toggleRowSelection(item, true);
+        this.operate(type);
       },
       operate: function (type) {
         var ids = [];

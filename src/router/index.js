@@ -232,7 +232,16 @@ export const constantRouterMap = [
   //     }
   //   ]
   // },
-
+  {
+    path: 'logout',
+    component: Layout,
+    name: '首页',
+    hidden: false,
+    children: [{
+      path: '',
+      meta: { title: '退出', icon: 'link' }
+    }]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 

@@ -4,9 +4,19 @@ import NProgress from 'nprogress' // Progress 进度条
 import 'nprogress/nprogress.css'// Progress 进度条样式
 import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // 验权
-
+import { logout } from '@/api/login'
 const whiteList = ['/login'] // 不重定向白名单
 router.beforeEach((to, from, next) => {
+  if (to.path === '/logout') {
+    return new Promise((resolve, reject) => {
+      logout().then(() => {
+        window.location.href = process.env.BASE_API+'/service/login.html';
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    });
+  }
   next()
   NProgress.start()
   if (getToken()) {
