@@ -16,7 +16,7 @@
       <div class="text item">
         积分：{{info.score}} <span class="red">兑换说明：5000积分/1.1元</span>
       </div>
-      <div>
+      <div v-if="info.score >= 5000">
         <el-row>
           <el-col :span="8">
             <div class="">
