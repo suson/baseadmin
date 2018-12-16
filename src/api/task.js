@@ -66,3 +66,8 @@ export function closeService(jsonstr) {
 //   REQUEST_DATA.data.i = jsonstr;
 //   return request(REQUEST_DATA)
 // }
+export function turnMoney(jsonstr) {
+  REQUEST_DATA.data.f = 40;
+  REQUEST_DATA.data.i = jsonstr;
+  return request(REQUEST_DATA)
+}
